@@ -24,7 +24,7 @@
 <p style="margin-bottom:1.2em"><a href="https://deepskyplan.github.io/radpendler-app/">← RadPendler</a></p>
 
 <h1>Datenschutzerklärung — RadPendler</h1>
-<p class="date">Stand: 22. September 2026</p>
+<p class="date">Stand: 26. September 2026</p>
 
 <p>RadPendler ist ein Pendel-Planer für iPhone, iPad und Apple Watch. Die App
 ist so gebaut, dass sie ohne die Erhebung personenbezogener Daten auskommt: es
@@ -52,6 +52,39 @@ einen Gerät. Der aktuelle Plan geht zusätzlich direkt an deine Apple Watch
 sondern nur Zeiten, Linien und Farben.</p>
 <p>Löschst du die App, sind diese Daten auf dem Gerät weg. Was in deiner iCloud
 liegt, löschst du über die iCloud-Einstellungen deines Apple-Kontos.</p>
+
+<h2>Was eine Fahrt sonst noch auslöst</h2>
+<p>Während einer Aufzeichnung hält die App von selbst an, wenn du lange an
+derselben Stelle stehst, und läuft weiter, sobald du wieder fährst. Dabei bleibt
+die Ortung an, aber sparsam. Nichts davon verlässt dein Gerät zusätzlich: es
+ist dieselbe Aufzeichnung, nur mit weniger Strom.</p>
+<p>Löschst du eine Fahrt, eine benutzte Adresse oder die gelernten Ampeln, reist
+seit Version 1.4 auch diese Löschung über deine iCloud — damit sie nicht von
+einem zweiten Gerät zurückkommt. Dafür merkt sich die App die Kennung des
+gelöschten Eintrags mit einem Zeitstempel, 90 Tage lang, und sonst nichts.</p>
+<h2>Aufgezeichnete Fahrten</h2>
+<p>Seit Version 1.1 kann RadPendler eine Fahrt aufzeichnen. Das passiert
+<strong>nur, wenn du es startest</strong>, und nur bis du sie beendest. Solange
+eine Aufzeichnung läuft, schreibt die App den <strong>gefahrenen Weg</strong>
+mit: Koordinaten mit Zeitstempel und Geschwindigkeit, dazu die Stellen, an
+denen du gestanden hast, und wie lange. Daraus entstehen die Zahlen, die du
+hinterher siehst — Strecke, Durchschnitt, Ampelhalts, Wartezeiten.</p>
+<p>Diese Aufzeichnungen liegen im privaten Speicher der App. Ist ein
+iCloud-Konto angemeldet, gehen die <strong>Kennzahlen</strong> einer Fahrt —
+Datum, Dauer, Strecke, Durchschnitt, Anzahl der Halte — zusätzlich über den
+iCloud-Schlüssel-Wert-Speicher auf deine anderen Geräte, damit dieselbe Liste
+überall steht. Seit Version&nbsp;1.3 reist auf demselben Weg auch der
+<strong>gefahrene Weg selbst</strong> — die Linie einer Fahrt liegt dann in
+deiner privaten <strong>iCloud-Datenbank</strong> (CloudKit), damit eine auf
+dem iPhone aufgezeichnete Fahrt auch auf dem iPad ihre Karte hat. Beides ist
+<em>deine</em> iCloud: die Daten liegen bei Apple unter deinem Konto, wir
+haben keinen Zugriff darauf, und dieses Projekt betreibt keinen Server, auf
+dem irgendetwas davon landen könnte. Ohne angemeldetes iCloud-Konto bleibt
+jede Aufzeichnung auf dem Gerät, auf dem sie entstanden ist. Eine Fahrt löschst du in der Liste (nach links wischen) — auf
+dem Gerät, auf dem du es tust.</p>
+<p>Während einer Aufzeichnung gehen <strong>keine</strong> Positionsdaten an
+die unten genannten Routing- und Fahrplandienste. Die Aufzeichnung ist eine
+reine Messung auf dem Gerät.</p>
 
 <h2>Was das Gerät an Dritte sendet — und warum</h2>
 <p>Eine Route lässt sich nicht berechnen, ohne zu sagen, wo sie anfängt und wo
@@ -91,8 +124,12 @@ laufen über keinen Server dieses Projekts, und wir sehen sie nicht.</p>
   <td><a href="https://www.openstreetmap.org/">OpenStreetMap</a> über die
       Overpass API</td>
   <td>Ampeln und Hauptstraßen im Korridor der Route</td>
-  <td>ein rechteckiger Ausschnitt um die Strecke — nicht die Route selbst;
-      die Antwort wird 30 Tage auf dem Gerät zwischengespeichert</td>
+  <td>Stützpunkte entlang der gefundenen Routen, etwa alle 150&nbsp;m, mit der
+      Bitte um alles im Umkreis von 300&nbsp;m. Bis Version&nbsp;1.2 war es
+      statt dessen ein rechteckiger Ausschnitt um die ganze Strecke; entlang
+      der Linie zu fragen überträgt zwar den Verlauf der Route, holt dafür
+      aber ein Zwölftel der Daten. Die Antwort wird 30 Tage auf dem Gerät
+      zwischengespeichert.</td>
 </tr>
 <tr>
   <td><a href="https://www.dwd.de/">Deutscher Wetterdienst</a> (GeoServer-WMS)</td>
@@ -116,11 +153,34 @@ aufzuzählen, was auf dem Gerät bleibt, und die Lücke sprechen zu lassen.</p>
 was sie zuletzt wusste, und sagt dazu, wie alt das ist.</p>
 
 <h2>Berechtigungen</h2>
-<p><strong>Standort (Beim Verwenden der App)</strong> — freiwillig, und nur
-dafür, den Start auf deine aktuelle Position zu legen. Lehnst du ab,
-funktioniert die App unverändert weiter; Start und Ziel wählst du dann von
-Hand. Die Position wird nicht an uns übertragen — sie geht, wie jede andere
-Startkoordinate, nur an die oben genannten Routing- und Fahrplandienste.</p>
+<p><strong>Standort (Beim Verwenden der App)</strong> — freiwillig, und für
+zwei Dinge. Erstens: „Mein Standort“ als Startadresse. Dafür wird die Position
+<em>einmal</em> abgefragt, in eine Adresse übersetzt und nicht gespeichert.
+Zweitens: das Aufzeichnen einer Fahrt, wenn du eine startest.</p>
+<p>Weil eine Pendelfahrt nicht aufzuzeichnen ist, solange man das Telefon in
+der Hand halten und den Bildschirm anlassen muss, läuft die Aufzeichnung auch
+weiter, wenn der Bildschirm gesperrt ist und das Telefon in der Tasche steckt.
+iOS zeigt dafür die ganze Zeit die <strong>blaue Leiste</strong> am oberen
+Bildschirmrand. Sobald du „Fahrt beenden“ antippst, hört die Ortung auf und die
+App schaltet die Hintergrundnutzung selbst wieder ab. <strong>Außerhalb einer
+laufenden Aufzeichnung verfolgt RadPendler nichts</strong> — es gibt kein
+Mitschreiben im Hintergrund, keine Bewegungserkennung und keine
+Standortverläufe, die du nicht selbst gestartet hast.</p>
+<p><strong>Hintergrund-Aktualisierung</strong> — seit Version&nbsp;1.3 darf iOS
+die App gelegentlich wecken, um <em>denselben</em> Weg noch einmal zu planen,
+auf den gerade der Countdown läuft, und die Warnungen auf den aktuellen
+Fahrplan nachzustellen: fährt der Zug später als beim letzten Öffnen bekannt,
+klingelt es sonst zu früh. Dabei gehen dieselben Start- und Zielkoordinaten
+an dieselben Dienste wie bei einer Suche, die du selbst auslöst — nur eben,
+ohne dass die App offen ist. <strong>Deine Position wird dafür nicht
+abgefragt</strong>; benutzt werden die eingestellten Adressen. Wann und ob
+iOS weckt, entscheidet iOS; abschalten lässt es sich in den iOS-Einstellungen
+unter „Allgemein → Hintergrundaktualisierung“. Läuft gerade kein Countdown,
+meldet die App diesen Bedarf gar nicht erst an.</p>
+<p>Lehnst du die Ortung ab, funktioniert alles andere unverändert weiter; Start
+und Ziel wählst du dann von Hand, und aufzeichnen lässt sich nichts. Die
+Position wird nicht an uns übertragen — als Startkoordinate geht sie an die
+oben genannten Routing- und Fahrplandienste, als Aufzeichnung an niemanden.</p>
 <p><strong>Mitteilungen</strong> — freiwillig, für die Warnungen vor dem
 Losgehen. Es sind <em>lokale</em> Mitteilungen: sie werden auf dem Gerät
 erzeugt und ausgelöst. Es gibt keinen Push-Dienst und kein Gerätetoken, das
